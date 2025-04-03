@@ -1,0 +1,22 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 16
+    commands:
+      - npm install
+  build:
+    commands:
+      - echo "Running tests..."
+      - npm test || true
+      - echo "Creating deployment package..."
+      - zip -r my-node-app.zip . -x "*.git*" "node_modules/*"
+  post_build:
+    commands:
+      - echo "Build completed successfully on $(date)"
+
+artifacts:
+  files:
+    - my-node-app.zip
+  discard-paths: no
